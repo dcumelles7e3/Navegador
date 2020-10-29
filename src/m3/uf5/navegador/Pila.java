@@ -11,7 +11,11 @@ public class Pila<E> implements Iterable{
     }
 
     public E peek() throws PilaBuidaException {
-        return pila.peek();
+        if (pila.isEmpty()) {
+            throw new PilaBuidaException();
+        } else {
+            return pila.peek();
+        }
     }
 
     public E pop() throws PilaBuidaException {

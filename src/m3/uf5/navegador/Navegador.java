@@ -17,9 +17,10 @@ public class Navegador {
 
     public void enrere(){
             try {
+                if (!pila.empty()){
                 pilaEndavant.push(pila.pop());
                 hist.add(pila.peek());
-                System.out.println("enrere a: "+pila.peek());
+                System.out.println("enrere a: "+pila.peek());}
             }catch (PilaBuidaException pb){}
     }
 
