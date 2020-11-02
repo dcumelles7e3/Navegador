@@ -16,7 +16,7 @@ public class ProvaNavegador {
     }
 
     private boolean menu() {
-        //Navegador navegador = new Navegador();
+
 
         String menu = "Escull opció: \n [1] Anar a un lloc web \n [2] Tornar enrere \n [3] Tornar endavant \n " +
                 "[4] Veure historial \n [5] Veure les més visitades \n [0] Finalitzar programa\n";
@@ -38,6 +38,8 @@ public class ProvaNavegador {
                 navegador.veureHistorial();
                 return true;
             case 5:
+                navegador.veureVisitades();
+                return true;
             case 0:
                 System.out.println("Finalitzant navegador...");
                 return false;

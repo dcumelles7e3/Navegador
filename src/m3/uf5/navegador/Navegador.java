@@ -21,7 +21,9 @@ public class Navegador {
                 pilaEndavant.push(pila.pop());
                 hist.add(pila.peek());
                 System.out.println("enrere a: "+pila.peek());}
-            }catch (PilaBuidaException pb){}
+            }catch (PilaBuidaException pb){
+                System.out.println("No hi ha anteriors.");
+            }
     }
 
     public void endavant(){
@@ -29,10 +31,14 @@ public class Navegador {
                 pila.push(pilaEndavant.pop());
                 hist.add(pila.peek());
                 System.out.println("endavant a: "+pila.peek());
-            }catch (PilaBuidaException pb){}
+            }catch (PilaBuidaException pb){
+                System.out.println("No hi ha seguent.");}
     }
     public void veureHistorial(){
-        System.out.println(hist.toString());
+        if (hist.isEmpty()){
+            System.out.println("Historial buit.");
+        }else{
+        System.out.println(hist.toString());}
     }
     public void veureVisitades() {
         int contador = 1;
@@ -45,7 +51,7 @@ public class Navegador {
 
             hm.replace(hist.get(i).toString(), contador, contador+1);
         }
-        System.out.println(hm.entrySet());
+        System.out.println(hm.entrySet().toString());
     }
 
 
