@@ -10,6 +10,10 @@ public class Navegador {
     List hist = new ArrayList<>();
     HashMap<String, Integer> hm = new HashMap();
 
+    public Navegador(String home){
+        anarA(home);
+    }
+
     public void anarA(String novaURL){
         pila.push(novaURL);
         hist.add(novaURL);

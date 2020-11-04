@@ -1,21 +1,26 @@
 package m3.uf5.navegador;
 
+import javax.swing.*;
 import java.util.Scanner;
 
 public class ProvaNavegador {
-    private Navegador navegador = new Navegador();
+    private GUI gui;
+    //private Navegador navegador = new Navegador();
 
     public static void main(String[] args) {
 
         ProvaNavegador main = new ProvaNavegador();
-        boolean active = true;
+        main.gui = new GUI();
+        main.gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        main.gui.setVisible(true);
+        /*boolean active = true;
         while (active) {
             active = main.menu();
-        }
+        }*/
 
     }
 
-    private boolean menu() {
+   /* private boolean menu() {
 
 
         String menu = "Escull opció: \n [1] Anar a un lloc web \n [2] Tornar enrere \n [3] Tornar endavant \n " +
@@ -82,6 +87,6 @@ public class ProvaNavegador {
 
         return num;
     }
-
+*/
 
 }
