@@ -5,11 +5,12 @@ import java.util.Scanner;
 
 public class ProvaNavegador {
     private GUI gui;
-    //private Navegador navegador = new Navegador();
+    //private Navegador navegador = new Navegador("");
 
     public static void main(String[] args) {
 
         ProvaNavegador main = new ProvaNavegador();
+
         main.gui = new GUI();
         main.gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         main.gui.setVisible(true);

@@ -10,13 +10,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/** Interfície gràfica per utilitzar en la pràctica del Navegador Web
+/**
+ * Interfície gràfica per utilitzar en la pràctica del Navegador Web
+ *
  * @author Montse
  * @version 26/10/2020
  */
 public class GUI extends JFrame {
 
-    private Navegador navi=new Navegador("http://www.itb.cat");
+    private Navegador navi = new Navegador("http://www.itb.cat");
 
     private JFXPanel jfxPanel = new JFXPanel(); //per carregar les webs (urls)
     private JPanel panel = new JPanel(new BorderLayout());
@@ -53,16 +55,28 @@ public class GUI extends JFrame {
         }
     }
 
-    class ListenerEnrere implements ActionListener{
+    class ListenerEnrere implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
+            try {
+                txtURL.setText(navi.enrere());
+                loadURL();
+            } catch (PilaBuidaException pb) {
+                System.out.println("Pila buida");
+            }
             //TODO
         }
     }
 
-    class ListenerEndavant implements ActionListener{
+    class ListenerEndavant implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
+            try {
+                txtURL.setText(navi.endavant());
+                loadURL();
+            } catch (PilaBuidaException pb) {
+                System.out.println("Pila buida");
+            }
             //TODO
         }
     }
@@ -72,6 +86,7 @@ public class GUI extends JFrame {
             WebView webView = new WebView();
             jfxPanel.setScene(new Scene(webView));
             webView.getEngine().load(txtURL.getText());
+            navi.anarA(txtURL.getText());
         });
     }
 
