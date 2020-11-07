@@ -16,12 +16,15 @@ public class ProvaNavegador {
         main.gui.setVisible(true);
         /*boolean active = true;
         while (active) {
+            try{
             active = main.menu();
+        }catch (PilaBuidaException pb){
+                System.out.println("Pila Buida");}
         }*/
 
     }
 
-   /* private boolean menu() {
+ /*  private boolean menu() throws PilaBuidaException {
 
 
         String menu = "Escull opció: \n [1] Anar a un lloc web \n [2] Tornar enrere \n [3] Tornar endavant \n " +
@@ -57,7 +60,7 @@ public class ProvaNavegador {
 
     private void comprovarActual() {
         try {
-            System.out.println("\nAra ets a: " +navegador.pila.peek()+"\n");
+            System.out.println("\nAra ets a: " +navegador.pilaEnrere.peek()+"\n");
         } catch (PilaBuidaException pb) {
         }
     }

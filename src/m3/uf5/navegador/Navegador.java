@@ -5,44 +5,47 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Navegador {
-    Pila pila = new Pila();
+    Pila pilaEnrere = new Pila();
     Pila pilaEndavant = new Pila();
-    List hist = new ArrayList<>();
-    HashMap<String, Integer> hm = new HashMap();
+    List<String> hist = new ArrayList<>();
+
+    String actual;
 
     public Navegador(String home) {
-        anarA(home);
+        this.actual = home;
+        hist.add(home);
     }
 
     public void anarA(String novaURL) {
-        pila.push(novaURL);
+        pilaEnrere.push(actual);
+        actual = novaURL;
         hist.add(novaURL);
+        if (!pilaEndavant.empty()) {
+            pilaEndavant.removeAllElements();
+        }
+        System.out.println("Ara ets a: " + actual);
     }
 
-    public String enrere() throws PilaBuidaException{
-        String last = "";
-
-            if (!pila.empty()) {
-                pilaEndavant.push(pila.pop());
-                hist.add(pila.peek());
-                last = (String) pila.peek();
-                System.out.println("enrere a: " + last);
-            }
-
-
-        return last;
-
+    public void enrere() throws PilaBuidaException {
+        if (!pilaEnrere.empty()) {
+            pilaEndavant.push(actual);
+            actual = (String) pilaEnrere.pop();
+            hist.add(actual);
+            System.out.println("Enrere a: " + actual);
+        } else {
+            System.out.println("No hi ha anteriors.");
+        }
     }
 
-    public String endavant() throws PilaBuidaException {
-
-
-        pila.push(pilaEndavant.pop());
-        hist.add(pila.peek());
-
-        System.out.println("endavant a: " + pila.peek());
-        return (String) pila.peek();
-
+    public void endavant() throws PilaBuidaException {
+        if (!pilaEndavant.empty()) {
+            pilaEnrere.push(actual);
+            actual = (String) pilaEndavant.pop();
+            hist.add(actual);
+            System.out.println("Endavant a: " + actual);
+        } else {
+            System.out.println("No hi ha següents.");
+        }
     }
 
     public void veureHistorial() {
@@ -54,18 +57,24 @@ public class Navegador {
     }
 
     public void veureVisitades() {
-        int contador = 1;
-        for (int i = 0; i < hist.size(); i++) {
-            hm.put(hist.get(i).toString(), contador);
-            if (hm.containsKey(hist.get(i).toString())) {
-                System.out.println(hist.get(i).toString());
-                contador++;
-            }
+        HashMap<String, Integer> hm = new HashMap();
 
-            hm.replace(hist.get(i).toString(), contador, contador + 1);
+        for (int i = 0; i < hist.size(); i++) {
+            if (hm.containsKey(hist.get(i))) {
+                int x = hm.get(hist.get(i));
+                hm.put(hist.get(i), x+1);
+            }else {
+                hm.put(hist.get(i), 1);
+            }
         }
         System.out.println(hm.entrySet().toString());
     }
 
+    public String getActual() {
+        return actual;
+    }
 
+    public void setActual(String actual) {
+        this.actual = actual;
+    }
 }

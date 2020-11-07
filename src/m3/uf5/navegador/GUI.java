@@ -18,13 +18,17 @@ import java.awt.event.ActionListener;
  */
 public class GUI extends JFrame {
 
-    private Navegador navi = new Navegador("http://www.itb.cat");
+    private String home = "http://www.itb.cat";
+
+    private Navegador navi = new Navegador(home);
 
     private JFXPanel jfxPanel = new JFXPanel(); //per carregar les webs (urls)
     private JPanel panel = new JPanel(new BorderLayout());
     private JButton btnEnrere = new JButton("<<");
     private JButton btnEndavant = new JButton(">>");
-    private JTextField txtURL = new JTextField("http://www.itb.cat");
+    private JButton hist = new JButton("Historial");
+    private JButton mesVisitades = new JButton("Mes Visitades");
+    private JTextField txtURL = new JTextField(home);
     //1 fila i 3 columnes
     private JPanel topBar = new JPanel(new GridLayout(1, 3));
 
@@ -34,10 +38,14 @@ public class GUI extends JFrame {
         btnEndavant.addActionListener(new ListenerEndavant());
         btnEnrere.addActionListener(new ListenerEnrere());
         txtURL.addActionListener(new ListenerGoTo());
+        hist.addActionListener(new ListenerHistorial());
+        mesVisitades.addActionListener(new ListenerVisitades());
 
         topBar.add(txtURL);
         topBar.add(btnEnrere);
         topBar.add(btnEndavant);
+        topBar.add(hist);
+        topBar.add(mesVisitades);
 
         panel.add(topBar, BorderLayout.NORTH);
         panel.add(jfxPanel, BorderLayout.CENTER);
@@ -51,33 +59,52 @@ public class GUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             loadURL();
-
+            navi.anarA(txtURL.getText());
         }
     }
 
     class ListenerEnrere implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            try {
-                txtURL.setText(navi.enrere());
-                loadURL();
-            } catch (PilaBuidaException pb) {
-                System.out.println("Pila buida");
+            if (!navi.pilaEnrere.empty()) {
+                try {
+                    navi.enrere();
+                    txtURL.setText(navi.getActual());
+                    loadURL();
+                } catch (PilaBuidaException e) {
+                    System.out.println("No hi ha anteriors.");
+                }
             }
-            //TODO
         }
     }
 
     class ListenerEndavant implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            try {
-                txtURL.setText(navi.endavant());
-                loadURL();
-            } catch (PilaBuidaException pb) {
-                System.out.println("Pila buida");
+            if (!navi.pilaEndavant.empty()) {
+                try {
+
+                    navi.endavant();
+                    txtURL.setText(navi.getActual());
+                    loadURL();
+                } catch (PilaBuidaException e) {
+                    System.out.println("No hi ha següents.");
+                }
             }
-            //TODO
+        }
+    }
+
+    class ListenerHistorial implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            navi.veureHistorial();
+        }
+    }
+
+    class ListenerVisitades implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            navi.veureVisitades();
         }
     }
 
@@ -86,9 +113,6 @@ public class GUI extends JFrame {
             WebView webView = new WebView();
             jfxPanel.setScene(new Scene(webView));
             webView.getEngine().load(txtURL.getText());
-            navi.anarA(txtURL.getText());
         });
     }
-
-
 }
