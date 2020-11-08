@@ -10,16 +10,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Interfície gràfica per utilitzar en la pràctica del Navegador Web
- *
+/** Mostra la GUI i conté lògica dels botons
+ * @version 08/11/2020
+ * @author Dídac Cumelles Cenzano
  * @author Montse
- * @version 26/10/2020
  */
 public class GUI extends JFrame {
-
     private String home = "http://www.itb.cat";
-
     private Navegador navi = new Navegador(home);
 
     private JFXPanel jfxPanel = new JFXPanel(); //per carregar les webs (urls)
@@ -29,9 +26,11 @@ public class GUI extends JFrame {
     private JButton hist = new JButton("Historial");
     private JButton mesVisitades = new JButton("Mes Visitades");
     private JTextField txtURL = new JTextField(home);
-    //1 fila i 3 columnes
-    private JPanel topBar = new JPanel(new GridLayout(1, 3));
 
+    private JPanel topBar = new JPanel(new GridLayout(1, 5));
+
+    /** Constructor. Carrega la pagina d'inici
+     */
     public GUI() {
         setBounds(100, 100, 800, 600);
         setTitle("Un Navegador de prova");
@@ -52,17 +51,22 @@ public class GUI extends JFrame {
 
         add(panel); //al JFrame
 
-        loadURL(); //perquè carregui la primera URL, la pàgina d'inici
+        loadURL(); //perque carregui la primera URL, la pagina d'inici
     }
 
+    /** Carrega una nova pagina
+     */
     class ListenerGoTo implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            loadURL();
             navi.anarA(txtURL.getText());
+            txtURL.setText(navi.getActual());
+            loadURL();
         }
     }
 
+    /** Crida a la funció enrere
+     */
     class ListenerEnrere implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
@@ -78,6 +82,8 @@ public class GUI extends JFrame {
         }
     }
 
+    /** Crida a la funció endavant
+     */
     class ListenerEndavant implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
@@ -94,6 +100,8 @@ public class GUI extends JFrame {
         }
     }
 
+    /** Mostra historial per consola
+     */
     class ListenerHistorial implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
@@ -101,6 +109,8 @@ public class GUI extends JFrame {
         }
     }
 
+    /** Mostra visitades per consola
+     */
     class ListenerVisitades implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
@@ -108,6 +118,8 @@ public class GUI extends JFrame {
         }
     }
 
+    /** Carrega la pàgina al frame
+     */
     private void loadURL() {
         Platform.runLater(() -> {
             WebView webView = new WebView();
